@@ -1,32 +1,138 @@
+/* General body styles */
 body {
-    font-family: Arial, sans-serif;
-    margin: 40px;
-    background-color: #f4f4f4;
+    font-family: 'Arial', sans-serif;
+    background-color: #f9f9f9;
+    margin: 0;
+    padding: 20px;
+    color: #333;
+    line-height: 1.6;
 }
 
-form {
-    width: 300px;
-    margin: auto;
-}
-
-label {
-    margin-top: 10px;
-}
-
-input[type="number"], input[type="range"], button {
-    width: 100%;
-    padding: 8px;
-}
-
-button {
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    padding: 10px;
-    cursor: pointer;
+/* Main heading style */
+h1 {
+    color: #207398;
+    text-align: center;
+    font-size: 2.5em;
     margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+/* Container for form and information */
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Form styling */
+form {
+    background-color: #ffffff;
+    max-width: 600px;
+    width: 100%;
+    margin: 20px auto;
+    padding: 30px 25px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+form:hover {
+    box-shadow: 0 5px 15px rgba(0, 86, 179, 0.2);
+}
+
+/* Form field styling */
+label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 6px;
+    color: #555;
+}
+
+input[type="number"],
+input[type="range"],
+button {
+    width: 100%;
+    padding: 12px;
+    margin-top: 5px;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    box-sizing: border-box;
+    transition: all 0.3s ease;
+    font-size: 1em;
+}
+
+/* Enhanced range slider styling */
+input[type="range"] {
+    -webkit-appearance: none;
+    appearance: none;
+    height: 10px;
+    background: linear-gradient(90deg, #1f208e 0%, #eee 100%);
+    outline: none;
+    opacity: 0.7;
+    transition: opacity .2s;
+}
+
+input[type="range"]:hover {
+    opacity: 1;
+}
+
+/* Input focus state */
+input[type="number"]:focus,
+input[type="range"]:focus {
+    border-color: #62c462;
+    box-shadow: 0 0 8px rgba(98, 196, 98, 0.6);
+}
+
+/* Button styling */
+button {
+    background-color: #5cb85c;
+    color: white;
+    font-size: 1.2em;
+    cursor: pointer;
+    border: none;
+    border-radius: 6px;
+    padding: 12px;
+    transition: background-color 0.3s ease;
 }
 
 button:hover {
-    opacity: 0.8;
+    background-color: #4cae4c;
+}
+
+/* Result and recommendation display styles */
+#predictionResult, .dietRecommendation {
+    text-align: center;
+    font-size: 1.2em;
+    margin-top: 20px;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 123, 255, 0.2);
+    background-color: #dff0d8;
+    color: #412675;
+    transition: all 0.3s ease-in-out;
+}
+
+.dietRecommendation:hover {
+    background-color: #d0e9c6;
+    box-shadow: 0 4px 8px rgba(0, 123, 255, 0.3);
+    transform: scale(1.05);
+}
+
+/* Responsive design for smaller screens */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 2em;
+    }
+
+    form {
+        padding: 20px 15px;
+    }
+
+    button, input[type="number"], input[type="range"] {
+        font-size: 1em;
+    }
+
+    #predictionResult, .dietRecommendation {
+        font-size: 1em;
+    }
 }
