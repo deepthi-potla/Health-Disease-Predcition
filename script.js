@@ -32,7 +32,7 @@ if (window.location.pathname.includes("/Health-Disease-Prediction/index.html")) 
 }
 
 // Handle health recommendations logic
-if (window.location.pathname.includes("health.html")) {
+if (window.location.pathname.includes("/Health-Disease-Prediction/health.html")) {
     const predictionForm = document.getElementById('predictionForm');
     const predictionResult = document.getElementById('predictionResult');
     const logoutButton = document.getElementById('logoutButton');
