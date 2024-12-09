@@ -5,12 +5,12 @@ const users = [
 ];
 
 // Redirect based on login status
-if (window.location.pathname.includes("health.html") && !localStorage.getItem('isLoggedIn')) {
-    window.location.href = 'index.html';
+if (window.location.pathname.includes("/Health-Disease-Prediction/health.html") && !localStorage.getItem('isLoggedIn')) {
+    window.location.href = '/Health-Disease-Prediction/index.html';
 }
 
 // Handle login logic
-if (window.location.pathname.includes("index.html")) {
+if (window.location.pathname.includes("/Health-Disease-Prediction/index.html")) {
     const loginForm = document.getElementById('loginForm');
     const loginError = document.getElementById('loginError');
 
@@ -24,7 +24,7 @@ if (window.location.pathname.includes("index.html")) {
 
         if (user) {
             localStorage.setItem('isLoggedIn', 'true');
-            window.location.href = 'health.html';
+            window.location.href = '/Health-Disease-Prediction/health.html';
         } else {
             loginError.textContent = "Invalid username or password!";
         }
@@ -110,6 +110,6 @@ if (window.location.pathname.includes("health.html")) {
     // Logout functionality
     logoutButton.addEventListener('click', function () {
         localStorage.removeItem('isLoggedIn');
-        window.location.href = 'index.html';
+        window.location.href = '/Health-Disease-Prediction/index.html';
     });
 }
