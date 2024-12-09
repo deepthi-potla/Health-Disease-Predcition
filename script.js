@@ -1,83 +1,115 @@
-document.getElementById('predictionForm').addEventListener('submit', function(event) {
-    event.preventDefault(); // Prevent the default form submission behavior
+// Hardcoded user credentials
+const users = [
+    { username: "user1", password: "password1" },
+    { username: "user2", password: "password2" }
+];
 
-    // const form = event.target;
-    // const formData = {
-    //     age: form.age.value,
-    //     sex: form.sex.value,
-    //     cp: form.cp.value,
-    //     trestbps: form.trestbps.value,
-    //     chol: form.chol.value,
-    //     fbs: form.fbs.value,
-    //     restecg: form.restecg.value,
-    //     thalach: form.thalach.value,
-    //     exang: form.exang.value,
-    //     oldpeak: form.oldpeak.value,
-    //     slope: form.slope.value,
-    //     ca: form.ca.value,
-    //     thal: form.thal.value
-    // };
+// Redirect based on login status
+if (window.location.pathname.includes("health.html") && !localStorage.getItem('isLoggedIn')) {
+    window.location.href = 'index.html';
+}
 
-    // // Make the fetch request to the Flask API
-    // fetch('http://localhost:5000/predict', {
-    //     method: 'POST',
-    //     headers: {
-    //         'Content-Type': 'application/json'
-    //     },
-    //     body: JSON.stringify(formData)
-    // })
-    // .then(response => {
-    //     if (!response.ok) {
-    //         // If the response is not okay, throw an error with the status text
-    //         throw new Error('Failed to fetch: ' + response.statusText);
-    //     }
-    //     return response.json();
-    // })
-    // .then(data => {
-    //     // Handle the data from the backend
-    //     document.getElementById('predictionResult').innerHTML = data.prediction ?
-    //         'Prediction: ' + data.prediction :
-    //         'No prediction received. Please check input data.';
-    // })
-    // .catch(error => {
-    //     // Handle any network or response parsing errors
-    //     console.error('Error:', error);
-    //     document.getElementById('predictionResult').innerHTML = 'Error: ' + error.message;
-    // });
+// Handle login logic
+if (window.location.pathname.includes("index.html")) {
+    const loginForm = document.getElementById('loginForm');
+    const loginError = document.getElementById('loginError');
 
+    loginForm.addEventListener('submit', function (event) {
+        event.preventDefault();
 
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
 
+        const user = users.find(u => u.username === username && u.password === password);
 
-    event.preventDefault(); // Prevent the default form submission behavior
+        if (user) {
+            localStorage.setItem('isLoggedIn', 'true');
+            window.location.href = 'health.html';
+        } else {
+            loginError.textContent = "Invalid username or password!";
+        }
+    });
+}
 
-    // Retrieve the value of the cholesterol input from the form
-    const cholesterol = document.getElementById('chol').value;
+// Handle health recommendations logic
+if (window.location.pathname.includes("health.html")) {
+    const predictionForm = document.getElementById('predictionForm');
+    const predictionResult = document.getElementById('predictionResult');
+    const logoutButton = document.getElementById('logoutButton');
 
-    // Check the cholesterol value to determine the health message
-    let codedPrediction;
-    if (cholesterol > 200) {
-        codedPrediction = 'The user has heart health issues';
-    } else {
-        codedPrediction = 'The user is healthy';
-    }
+    predictionForm.addEventListener('submit', function (event) {
+        event.preventDefault();
 
-    // Array of diet recommendations
-    const dietRecommendations = [
-        "Diet Plan A: Include plenty of fruits and vegetables, whole grains, and low-fat dairy products. Reduce sodium in your diet.",
-        "Diet Plan B: Focus on eating fish high in omega-3 fatty acids, such as salmon, twice a week. Limit saturated fats and trans fats.",
-        "Diet Plan C: Opt for lean meats and poultry without skin. Prepare foods without added sugars, saturated fats, and sodium."
-    ];
+        const cholesterol = document.getElementById('chol').value;
 
-    // Randomly select a diet recommendation if the user has health issues
-    let selectedDiet = '';
-    if (cholesterol > 200) {
-        const randomIndex = Math.floor(Math.random() * dietRecommendations.length);
-        selectedDiet = `Recommended Diet: ${dietRecommendations[randomIndex]}`;
-    }
+        if (cholesterol > 200) {
+            // Weekly schedule for high cholesterol
+            const weeklySchedule = `
+                <h3>Weekly Exercise and Diet Schedule (For 3 Months)</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Day</th>
+                            <th>Exercise</th>
+                            <th>Diet Plan</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Monday</td>
+                            <td>30 minutes Cardio + Chest Workouts</td>
+                            <td>Oatmeal with fruits, Grilled chicken salad, Steamed veggies with brown rice</td>
+                        </tr>
+                        <tr>
+                            <td>Tuesday</td>
+                            <td>30 minutes Brisk Walk + Weight Training</td>
+                            <td>Whole-grain toast with avocado, Lentil soup, Quinoa with grilled salmon</td>
+                        </tr>
+                        <tr>
+                            <td>Wednesday</td>
+                            <td>Yoga + Full-body Strength Training</td>
+                            <td>Low-fat yogurt with nuts, Mixed greens with chickpeas, Baked sweet potato with turkey</td>
+                        </tr>
+                        <tr>
+                            <td>Thursday</td>
+                            <td>HIIT Cardio + Upper Body Workouts</td>
+                            <td>Fruit smoothie with protein powder, Grilled tofu salad, Stir-fried veggies with tofu</td>
+                        </tr>
+                        <tr>
+                            <td>Friday</td>
+                            <td>45 minutes Cycling + Core Workouts</td>
+                            <td>Scrambled eggs with spinach, Quinoa bowl with veggies, Grilled chicken with asparagus</td>
+                        </tr>
+                        <tr>
+                            <td>Saturday</td>
+                            <td>Swimming + Active Stretching</td>
+                            <td>Whole-grain pancakes with berries, Caesar salad with grilled chicken, Sautéed fish with rice</td>
+                        </tr>
+                        <tr>
+                            <td>Sunday</td>
+                            <td>Rest Day / Light Yoga</td>
+                            <td>Fresh fruit bowl, Veggie wrap, Homemade vegetable soup</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p><strong>Note:</strong> Repeat this weekly plan for 3 months for optimal results.</p>
+            `;
 
-    // Display the prediction result and optionally the selected diet recommendation
-    document.getElementById('predictionResult').innerHTML = `
-        Prediction: ${codedPrediction}<br>
-        ${selectedDiet}
-    `;
-});
+            predictionResult.innerHTML = `
+                <p><strong>High cholesterol detected.</strong> Follow this plan for better health:</p>
+                ${weeklySchedule}
+            `;
+        } else {
+            // Recommendations for normal cholesterol
+            predictionResult.innerHTML = `
+                <p><strong>Cholesterol levels are normal.</strong> Maintain a healthy lifestyle with balanced meals and regular exercise.</p>
+            `;
+        }
+    });
+
+    // Logout functionality
+    logoutButton.addEventListener('click', function () {
+        localStorage.removeItem('isLoggedIn');
+        window.location.href = 'index.html';
+    });
+}
